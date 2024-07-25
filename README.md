@@ -1,2 +1,1 @@
-run sim file
-when we run the file, we expecting the auv is going to desired position with small errors
+when we run the simulation file, we expecting the auv is going to desired position with small errors
