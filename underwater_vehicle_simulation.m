@@ -77,8 +77,8 @@ function underwater_vehicle_simulation()
     Nrdot = -127;
 
     % PD kontrol kazançları
-    Kp_position = [10; 36; 45]; % Pozisyon kontrolü için PD kazançları
-    Kd_position = [5; 30; 35];
+    Kp_position = [10; 35; 45]; % Pozisyon kontrolü için PD kazançları
+    Kd_position = [5; 28; 30];
     Kp_orientation = [10; 22; 33]; % Oryantasyon kontrolü için PD kazançları
     Kd_orientation = [5; 10; 15];
 
@@ -87,7 +87,7 @@ function underwater_vehicle_simulation()
     t_span = 0:0.1:100; % Simulate for 100 seconds with 0.1s step size
 
     % Desired position
-    desired_position = [7; 4; 2]; % Desired x, y, z positions
+    desired_position = [15; 7; 5]; % Desired x, y, z positions
     desired_orientation = [0; 0; 0]; % Desired roll, pitch, yaw angles
 
     % Solve the differential equations
