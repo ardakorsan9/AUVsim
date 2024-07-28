@@ -46,7 +46,7 @@ function g_dot = underwater_vehicle_dynamics(t, g, desired_position, desired_ori
     position_control = max(min(position_control, max_control), -max_control);
     orientation_control = max(min(orientation_control, max_control), -max_control);
     
-    % Compute forces and moments using control inputs and other terms
+    % Compute forces and moments using control inputs and other termss
     X = (W - B) * sin(theta) + Xuu * u * abs(u) + (Xwq - m) * w * q + (Xvr + m) * v * r + (Xqq + m * xg) * q^2 + (Xrr + m * xg) * r^2 - m * yg * p * q - m * zg * p * r + position_control(1);
     Y = -(W - B) * cos(theta) * sin(phi) + Yvv * v * abs(v) + Yrr * r * abs(r) + (Yur - m) * u * r + (Ywp - m) * w * p + (Ypq - m * xg) * p * q + m * zg * q * r + m * yg * p^2 + Yuv * u * v + position_control(2);
     Z = -(W - B) * cos(theta) * cos(phi) + Zww * w * abs(w) + Zqq * q * abs(q) + (Zuq + m) * u * q + (Zvp - m) * v * p + (Zrp - m * xg) * r * p - m * yg * r * q + m * zg * p^2 + m * zg * q^2 + Zuw * u * w + position_control(3);
