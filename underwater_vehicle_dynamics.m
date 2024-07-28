@@ -46,21 +46,13 @@ function g_dot = underwater_vehicle_dynamics(t, g, desired_position, desired_ori
     position_control = max(min(position_control, max_control), -max_control);
     orientation_control = max(min(orientation_control, max_control), -max_control);
     
-% Compute the derivatives of the state variables (accelerations)
-du_dt = (g_dot(7) - u) / dt;
-dv_dt = (g_dot(8) - v) / dt;
-dw_dt = (g_dot(9) - w) / dt;
-dp_dt = (g_dot(10) - p) / dt;
-dq_dt = (g_dot(11) - q) / dt;
-dr_dt = (g_dot(12) - r) / dt;
-
-% Update the force and moment equations with the derivative terms
-X = (W - B) * sin(theta) + Xuu * u * abs(u) + X_udot * du_dt + (Xwq - m) * w * q + (Xvr + m) * v * r + (Xqq + m * xg) * q^2 + (Xrr + m * xg) * r^2 - m * yg * p * q - m * zg * p * r + position_control(1);
-Y = -(W - B) * cos(theta) * sin(phi) + Yvv * v * abs(v) + Yvdot * dv_dt + Yrr * r * abs(r) + (Yur - m) * u * r + (Ywp - m) * w * p + (Ypq - m * xg) * p * q + m * zg * q * r + m * yg * p^2 + Yuv * u * v + position_control(2);
-Z = -(W - B) * cos(theta) * cos(phi) + Zww * w * abs(w) + Zwdot * dw_dt + Zqq * q * abs(q) + (Zuq + m) * u * q + (Zvp - m) * v * p + (Zrp - m * xg) * r * p - m * yg * r * q + m * zg * p^2 + m * zg * q^2 + Zuw * u * w + position_control(3);
-K = -(yg*W-yb*B)*cos(theta)*cos(phi) + (zg*W-zb*B)*cos(theta)*sin(phi) + Kpp * p * abs(p) + Kpdot * dp_dt + (Iyy - Izz) * q * r - m * v * p + m * u * q - m * zg * w * p + m * zg * u * r + orientation_control(1);
-M = (zg*W-zb*B)*sin(theta) + (xg*W-xb*B)*cos(theta)*cos(phi) + Mww * w * abs(w) + Mwdot * dw_dt + Mqq * q * abs(q) + (Mvp + m * xg) * v * p + (Mrp - Ixx + Izz) * r * p + (Muq - m * xg) * u * q + Muw * u * w + m * zg * r * v - m * zg * q * w + orientation_control(2);
-N = -(xg*W-xb*B)*cos(theta)*sin(phi) - (yg*W-yb*B)*sin(theta) + Nvv * v * abs(v) + Nvdot * dv_dt + Nrr * r * abs(r) + (Nwp + m * xg) * w * p + (Npq - Iyy + Ixx) * p * q + (Nur - m * xg) * u * r + Nuv * u * v + m * yg * q * w - m * yg * r * v + orientation_control(3);
+    % Compute forces and moments using control inputs and other terms
+    X = (W - B) * sin(theta) + Xuu * u * abs(u) + (Xwq - m) * w * q + (Xvr + m) * v * r + (Xqq + m * xg) * q^2 + (Xrr + m * xg) * r^2 - m * yg * p * q - m * zg * p * r + position_control(1);
+    Y = -(W - B) * cos(theta) * sin(phi) + Yvv * v * abs(v) + Yrr * r * abs(r) + (Yur - m) * u * r + (Ywp - m) * w * p + (Ypq - m * xg) * p * q + m * zg * q * r + m * yg * p^2 + Yuv * u * v + position_control(2);
+    Z = -(W - B) * cos(theta) * cos(phi) + Zww * w * abs(w) + Zqq * q * abs(q) + (Zuq + m) * u * q + (Zvp - m) * v * p + (Zrp - m * xg) * r * p - m * yg * r * q + m * zg * p^2 + m * zg * q^2 + Zuw * u * w + position_control(3);
+    K = -(yg*W-yb*B)*cos(theta)*cos(phi) + (zg*W-zb*B)*cos(theta)*sin(phi) + Kpp * p * abs(p) + (Iyy - Izz) * q * r - m * v * p + m * u * q - m * zg * w * p + m * zg * u * r + orientation_control(1);
+    M = (zg*W-zb*B)*sin(theta) + (xg*W-xb*B)*cos(theta)*cos(phi) + Mww * w * abs(w) + Mqq * q * abs(q) + (Mvp + m * xg) * v * p + (Mrp - Ixx + Izz) * r * p + (Muq - m * xg) * u * q + Muw * u * w + m * zg * r * v - m * zg * q * w + orientation_control(2);
+    N = -(xg*W-xb*B)*cos(theta)*sin(phi) - (yg*W-yb*B)*sin(theta) + Nvv * v * abs(v) + Nrr * r * abs(r) + (Nwp + m * xg) * w * p + (Npq - Iyy + Ixx) * p * q + (Nur - m * xg) * u * r + Nuv * u * v + m * yg * q * w - m * yg * r * v + orientation_control(3);
 
     % Matrix A
     A = [m - Xudot, 0, 0, 0, m * zg, -m * yg;
