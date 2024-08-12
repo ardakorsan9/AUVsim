@@ -1,4 +1,5 @@
 function plot_vehicle_results(t, g, desired_position)
+    % Visualization
     figure;
     subplot(4, 1, 1);
     plot(t, g(:, 1), t, repmat(desired_position(1), length(t), 1), '--', ...
