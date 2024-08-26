@@ -7,12 +7,11 @@ function underwater_vehicle_simulation()
     t_span = 0:0.1:100;
 
     % Desired position and orientation
-    desired_position = [1; 1; 1];
+    desired_position = [10; 10; 10];
     desired_orientation = [0; 0; 0];
 
-    % ODE options for solver tolerance
-    options = odeset('RelTol',1e-3,'AbsTol',1e-6);
-    [t, g] = ode45(@(t, g) underwater_vehicle_dynamics(t, g, desired_position, desired_orientation), t_span, f_0, options);
+    % ODE
+    [t, g] = ode45(@(t, g) underwater_vehicle_dynamics(t, g, desired_position, desired_orientation), t_span, f_0);
 
     % Plot the results
     plot_vehicle_results(t, g, desired_position);
