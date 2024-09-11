@@ -2,7 +2,7 @@ function actuator_forces = calculate_actuator_forces(position_control, orientati
     global K_t K_m tau_m
 
     % Kuvvet hesaplamasında tanh sınırlarını artırma
-    alpha = 2;  % tanh fonksiyonunun sınırlarını artırmak için çarpan
+    alpha = 1.5;  % tanh fonksiyonunun sınırlarını artırmak için çarpan
     
     force_x = K_t * tanh(alpha * K_m * position_control(1) / tau_m);
     force_y = K_t * tanh(alpha * K_m * position_control(2) / tau_m);
