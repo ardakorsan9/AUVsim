@@ -3,7 +3,7 @@ function underwater_vehicle_simulation()
     init_parameters();
 
     % Waypoints tanımlama
-    waypoints = [15, 5, -10; 
+    waypoints = [40, 5, -10; 
                  25, 20, -15; 
                  30, 25, -20; 
                  40, 30, -25]; % Waypoints listesi
@@ -12,11 +12,11 @@ function underwater_vehicle_simulation()
     f_0 = zeros(12, 1); 
 
     % Simülasyon zamanı
-    dt = 0.1; % Zaman adımı
-    t_total = 40; % Toplam simülasyon süresi
+    dt = 0.2; % Zaman adımı
+    t_total = 20; % Toplam simülasyon süresi
 
     % Boş figürleri hazırla (smooth ve anlık güncellenebilir olacak)
-    [fig1, fig2] = setup_plots(waypoints); % Waypoint grafiği ve hız/pozisyon grafiği
+    [fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position] = setup_plots(waypoints); % Waypoint grafiği ve hız/pozisyon grafiği
     
     % Araç yolu, hız ve açısal hız verileri için boş diziler
     vehicle_path = [];  % X, Y, Z pozisyonları
@@ -33,7 +33,7 @@ function underwater_vehicle_simulation()
 
         % Simülasyonu zaman adımlarıyla yürüt ve grafikleri her adımda güncelle
         t_idx = 0;  % Zaman indeksi
-        while distance_to_waypoint > 0.5  % Waypoint'e ulaşana kadar çalıştır (Mesafeyi artırdık)
+        while distance_to_waypoint > 0.5  % Waypoint'e ulaşana kadar çalıştır
             t_span = total_time:dt:(total_time + dt); % Her adımda sadece dt kadar ilerle
             
             % Anlık çözüm (ODE45)
@@ -46,7 +46,7 @@ function underwater_vehicle_simulation()
             angular_velocities = [angular_velocities; g(end, 10:12)];  % Açısal hızlar (p, q, r)
 
             % Gerçek zamanlı olarak grafikleri güncelle
-            update_real_time_plots(fig1, fig2, vehicle_path, waypoints, times, velocities, angular_velocities);
+            update_real_time_plots(fig1, fig2, vehicle_path, times, velocities, angular_velocities, h_vehicle_path, h_velocity, h_angular_velocity, h_position);
 
             % Son durumu bir sonraki adıma geçiş için başlat
             f_0 = g(end, :)';  % Yeni başlangıç durumu
