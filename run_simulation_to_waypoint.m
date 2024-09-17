@@ -1,4 +1,4 @@
-function vehicle_path = run_simulation_to_waypoint(current_waypoint, f_0, dt, total_time, vehicle_path, times, velocities, angular_velocities, fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position)
+function [vehicle_path, times, velocities, angular_velocities, total_time] = run_simulation_to_waypoint(current_waypoint, f_0, dt, total_time, vehicle_path, times, velocities, angular_velocities, fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position)
     % Waypoint'e ulaşana kadar simülasyonu çalıştır
     distance_to_waypoint = norm(current_waypoint - f_0(1:3)); 
     while distance_to_waypoint > 0.5
