@@ -17,12 +17,9 @@ function g_dot = underwater_vehicle_dynamics(t, g, desired_position, desired_ori
     position_error = desired_position - [x; y; z];
     orientation_error = desired_orientation - [phi; theta; psi];
 
-    % Adaptif kontrol - hata büyüklüğüne göre Kp ve Kd ayarları
-    adaptive_gain = 1 + norm(position_error) / 10;  % Hata büyüdükçe kazanç artar
-    Kp_position_adaptive = Kp_position * adaptive_gain;
-    Kd_position_adaptive = Kd_position * adaptive_gain;
-    Kp_orientation_adaptive = Kp_orientation * adaptive_gain;
-    Kd_orientation_adaptive = Kd_orientation * adaptive_gain;
+    % Adaptif kontrol kazançlarını hesapla (yeni dosyadan çağırılıyor)
+    [Kp_position_adaptive, Kd_position_adaptive, Kp_orientation_adaptive, Kd_orientation_adaptive] = ...
+        calculate_control_gains(position_error, orientation_error, Kp_position, Kd_position, Kp_orientation, Kd_orientation);
 
     % Adaptif PD kontrol
     position_control = Kp_position_adaptive .* position_error - Kd_position_adaptive .* [u; v; w];
