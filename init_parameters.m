@@ -1,31 +1,35 @@
 function init_parameters()
-    global m W B Xu Yv Zw Kp_roll Mpitch Nr Ixx Iyy Izz
-    global Kp_position Kd_position Kp_orientation Kd_orientation
+    global m W B  Ixx Iyy Izz
+    global Kp_position Kd_position Kp_orientation Kd_orientation Kp_speed Kd_speed Ki_position Ki_orientation
     global tau_m K_m K_t
     global xg yg zg  % Center of gravity coordinates
     global Xuu Yvv Zww Xwq Xvr Yrr Yur Ywp Zqq Zuq Zvp Zrp Kpp Mww Mqq Mrp Muq Muw Mvp Nvv Nrr Nuv Npq Nwp Nur 
     global Xrr Xqq Ypq Yuv Zuw 
     global yb zb xb
     global Xudot Yvdot Yrdot Zwdot Zqdot Kpdot Mwdot Mqdot Nvdot Nrdot
+    
 
     % Fiziksel ve kontrol parametreleri
     m = 18.826;  
     W = 299;  
     B = 306;  
-    Xu = -162;  
-    Yv = -131;  
-    Zw = -131;  
-    Kp_roll = -0.0013;  
-    Mpitch = -9.40;  
-    Nr = -9.40;  
     Ixx = 0.177;  
     Iyy = 3.45;  
     Izz = 3.45;  
-    
-    Kp_position = [50; 148; 178];  
-    Kd_position = [70; 80; 95];  
-    Kp_orientation = [50; 172; 187];  
-    Kd_orientation = [85; 110; 125];  
+
+    Kp_position = [250; 878; 1778];  
+    Kd_position = [370; 720; 1795];
+    Ki_position = [0.1; 0.1; 0.1];  % Integral kazançları
+
+    Kp_orientation = [350; 892; 1745];
+    Kd_orientation = [485; 2110; 3225]; 
+    Ki_orientation = [0.05; 0.05; 0.05];  % Integral kazançları
+
+
+    % Hız kontrol kazançları
+    Kp_speed = [10; 10; 10];  % Hız için PD kontrol kazançları (örnek değerler)
+    Kd_speed = [5; 5; 5];     % Hız için türevsel kazançlar (örnek değerler)
+
     
     
     tau_m = 0.5;  

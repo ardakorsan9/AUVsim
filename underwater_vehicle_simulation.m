@@ -2,21 +2,23 @@ function underwater_vehicle_simulation()
     % Global parametreleri başlat
     init_parameters();
 
-    % Waypoints tanımlama
-    waypoints = [40, 5, -10; 
-                 25, 20, -15; 
-                 30, 25, -20; 
-                 40, 30, -25]; 
+    dt = 0.2;  % Zaman adımı
 
-    % Başlangıç pozisyonu
-    f_0 = zeros(12, 1); 
+    % Daha dengeli bir path oluşturzz
+    radius = 10;
+    pitch = 10;
+    num_turns = 5;
+    num_points = 100;
+    path = generate_balanced_helical_path(radius, pitch, num_turns, num_points);
 
-    % Simülasyon zamanı
-    dt = 0.2; % Zaman adımı
+    % Başlangıç pozisyonunu path'in ilk noktasına ayarla
+    f_0 = zeros(12, 1);
+    f_0(1:3) = path(1, :)';  % İlk pozisyonu path'in ilk noktasına eşitle
 
     % Boş figürleri hazırla
-    [fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position] = setup_plots(waypoints);
+    [fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position] = setup_plots(path);
+    
 
-    % Waypoint döngüsünü çalıştır
-    waypoint_simulation_loop(waypoints, f_0, dt, fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position);
+    % Path takip simülasyonu
+    continuous_path_tracking(path, f_0, dt, fig1, fig2, h_vehicle_path, h_velocity, h_angular_velocity, h_position);
 end
