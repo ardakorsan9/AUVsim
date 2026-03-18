@@ -1,1 +1,1 @@
-when we run the simulation file, we expecting the auv is going to desired position with small errors
+This is underwater vehicle simulation in matlab by using dynamic of 6 dof uav, 
